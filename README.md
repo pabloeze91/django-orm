@@ -17,7 +17,7 @@ Siempre en el mismo directorio del archivo *docker-compose.yml*
 
 ### 2. Correr la línea de comandos dentro del contenedor
 
-**$** `docker exec -i -t modulo_4a bash`
+**$** `docker exec -i -t modulo_3b bash`
 
 Nos va a devolver a nuestra consola, una consola dentro del contenedor de software.
 
@@ -56,7 +56,7 @@ Tan solo con el comando `ctrl + c`  se detiene la ejecución de nuestro contened
 
 Una forma alternativa es con el siguiente comando en la terminal del host:
 
-**$** `docker stop modulo_4a`  
+**$** `docker stop modulo_3b`  
 
 O también puede ser con docker-compose:
 Tenemos que estar en la carpeta que contiene el archivo *docker-compose.yml* y hacer:

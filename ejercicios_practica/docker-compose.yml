@@ -42,9 +42,9 @@ services:
       context: .
       dockerfile: dockerfile
     # Imágen a utilizar:
-    image: modulo_3
+    image: modulo_3b
     # Nombre del container:
-    container_name: modulo_3_tp
+    container_name: modulo_3b_tp
     # Carpetas enlazadas:
     volumes:
       # Source code directory:

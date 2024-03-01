@@ -34,7 +34,7 @@ services:
     # depends_on indica que este servicio depende de que primero inicie "db"
     depends_on: ["db"]
 
-  modulo_4:
+  modulo_3:
     # build es el lugar desde donde toma los archivos para generar la imagen.
     # Toma como contexto de trabajo el directorio donde está el docker-compose.yml (.)
     # y busca el archivo "dockerfile".
@@ -42,9 +42,9 @@ services:
       context: .
       dockerfile: dockerfile
     # Imágen a utilizar:
-    image: modulo_4a
+    image: modulo_3b
     # Nombre del container:
-    container_name: modulo_4a
+    container_name: modulo_3b
     # Carpetas enlazadas:
     volumes:
       # Source code directory:

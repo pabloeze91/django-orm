@@ -40,31 +40,17 @@ BASE_APPS = [
     'django.contrib.staticfiles',
 ]
 
-# Acá van las apps de 3ros que necesitamos agregar
-# para que Django las encuentre.
-THIRD_APPS = ['rest_framework']
+# Acá van las apps de 3ros que necesitamos agregar para que Django las encuentre.
+THIRD_APPS = [
+
+]
 
 # Acá van las apps que creamos nosotros.
-LOCAL_APPS = ['e_commerce']
+LOCAL_APPS = [
+    'e_commerce',
+]
 
 INSTALLED_APPS = BASE_APPS + THIRD_APPS + LOCAL_APPS
-
-# INSTALLED_APPS = [
-#     'django.contrib.admin',
-#     'django.contrib.auth',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-#     # Local apps: Acá ponemos el nombre de las carpetas
-#     # de nuestras aplicaciones.
-#     'e_commerce',
-#     # Third party apps: acá vamos agregando las aplicaciones de terceros,
-#     # extensiones de Django.
-#     'rest_framework',
-# ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,12 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'marvel.wsgi.application'
 
-# NOTE: Configuración general para DRF.
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ]
-}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -176,13 +156,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# NOTE: Para debug
-
-# Color en los prints:
-# Modo de uso: print(VERDE+"mi texto")
-
-AMARILLO = "\033[;33m"
-CIAN = "\033[;36m"
-VERDE = "\033[;32m"

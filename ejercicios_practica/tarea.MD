@@ -95,7 +95,7 @@ Puede evaluar que ha alcanzo los solicitado en el desafio ejecutando los tests q
 3 - Abrir una nueva consola dentro de la carpeta **ejercicios_practica**.
 
 4 - Ingresar su consola dentro del contenedor con el siguiente comando (si es que está usando Docker):\
-**$** `docker exec -it modulo_3_tp bash`
+**$** `docker exec -it modulo_3b_tp bash`
 
 5 - Lance los tests con el siguiente comando:\
 **$** `pytest -s`
