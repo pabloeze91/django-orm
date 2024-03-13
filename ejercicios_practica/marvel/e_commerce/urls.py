@@ -3,5 +3,5 @@ from e_commerce.views import *
 
 
 urlpatterns = [
-    path('comic-list/', comic_list_api_view),
+    path('comic-list/', comic_list_api_view, name="comic_list_api_view"),
 ]

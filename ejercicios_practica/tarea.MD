@@ -15,74 +15,59 @@ Recuerde que no debe subir la base de datos al sistema, para ello se encuentra e
 
 ### 1. Utilizar el proyecto de "Marvel" visto en clase.
 Inicializar el contenedor de docker, compilar la imagen del repositorio con:
+1 - Abrir una consola dentro de la carpeta **ejercicios_practica**.
+
+2 - Lanzar el docker de ejercicios_practica (si es que está usando Docker):\
 **$** `docker-compose up`
 
+__NOTA__: Sino está utizando docker deberá lanzar el servidor usando el comando runserver. Cualquier duda nos consulta
+
 ### 2. Realizar las migraciones del sistema.
-Recuerde que para poder comenzar a utilizar el Django Admin, es necesario que el sistema se encuentre alineado con la base de datos. Para ello debemos realizar las migraciones de la aplicación y crear un nuevo superusuario.
-Los comandos necesarios se encuentran detallados en el archivo README.md
+Recuerde que para poder comenzar a utilizar el Django Admin, es necesario que el sistema se encuentre alineado con la base de datos. Para ello debemos realizar las migraciones de la aplicación y crear un nuevo superusuario:
+1 - Abrir una nueva consola dentro de la carpeta **ejercicios_practica**.
 
-### 3. Personalice el administrador de Django.
-Familiarícese con la aplicación, personalice el administrador de Django utilizando los atributos de admin.py.
+2 - Ingresar su consola dentro del contenedor con el siguiente comando (si es que está usando Docker):\
+**$** `docker exec -it modulo_3b_tp bash`
 
-### 4. Genere una nueva entidad en models.py 
-Diseñe una nueva entidad en models.py, llamada "WishList" y agréguele los campos (columnas en la tabla resultante):
-* id
-* user (Este campo debe ser un Foreign Key relacionando con el modelo **User** que ofrece Django).
-* comic (Este campo debe ser un Foreign Key relacionando con el Modelo **Comic**).
-* favorite
-* cart
-* wished_qty
-* bought_qty 
+3 - Ejecutar los siguientes comandos para realizar la primera migración:\
+**$** `python manage.py makemigrations`
 
-Debe basarse en el siguiente diseño de entidades:
+**$** `python manage.py migrate`
 
-![Entidades](/entidades.png)
+4 - Ejecutar el siguiente comando para crear un super usuario:
 
-Tip:
-El atributo "comic" del modelo es un campo de tipo FK, para poder implementarlo utilizaremos:
+**$** `python manage.py createsuperuser`
 
-```
-comic = models.ForeignKey(
-    Comic,
-    verbose_name='Comic',
-    on_delete=models.CASCADE,
-    default=1,
-    blank=True
-)
-```
-Cuyos argumentos son:
+5 - Ingresar al django admin y verificar que todas las tablas se encuentran allí (verá las tablas vacias)
 
-* Comic --> El nombre de la clase (modelo) que hace referencia a la entidad "comic".
-* on_delete=models.CASCADE --> Hace que al borrar un registro, se borren sus relacionados.
-    - Links de Interés:
-      - [Documentación de Django](https://docs.djangoproject.com/en/3.2/ref/models/fields/#arguments)
-      - [Stack Overflow](https://stackoverflow.com/questions/38388423/what-does-on-delete-do-on-django-models)
-* default --> Valor por defecto si no se le agrega ninguno.
-* blank --> Permite que se inserte un registro con este campo vacío.
+6 - Si desea puede cerrar esta terminal o dejarla abierta para el siguiente paso
 
-### 5. Realizar las migraciones del sistema.
-Recuerde hacer el `makemigrations` y el `migrate`.
+### 3. Llenar su base de datos de comics
+Para poder realizar esta práctica necesitará contactar con varios comics. Para evitar realizar este proceso a mano deberá ejecutar el comando creado en esta aplicación para llenar su base de datos de comics:
 
-### 6. Nueva entidad en Django Admin.
-Haga que la nueva entidad aparezca en el administrador de Django, recuerde realizar las migraciones previamente y lo trabajado en admin.py
+1 - Abrir una nueva consola dentro de la carpeta **ejercicios_practica**.
 
-### 7. Completar la view llamada "get_comic_api_view()"
-Deberá compeltar una view basada en una función llamada "get_comic_api_view()", que se encuentra en el archivo "views.py" dentro de e-commerce. Esta view ya está configurada y el endpoint que se le adjudicó (la URL) es `get-comic/`.
+2 - Ingresar su consola dentro del contenedor con el siguiente comando (si es que está usando Docker):\
+**$** `docker exec -it modulo_3b_tp bash`
 
-Lo que deberá hacer que completar esa función la cual deberá retornar el siguiente JSON:
-```
-    {
-        "id": 1,
-        "marvel_comic": "1010",
-        "title": "Inove",
-        "stock_qty": 6,
-        "description": "Mi primer JSON en Django",
-        "price": 10.0,
-        "picture": "https://www.django-rest-framework.org/img/logo.png"
-    }
-```
+3 - Lance el comando creado para llenar su DB de comics:\
+**$** `python3 manage.py  get_comics`
 
-Recuerde que para que Django pueda renderizar (el endpoint retornar) un JSON, deberá retornar los datos con un JsonResponse.
+5 - Ingresar al django admin y verificar que ahora cuenta con comics dentro de su tabla de Comics
+
+6 - Si desea puede cerrar esta terminal o dejarla abierta para el siguiente paso
+
+### 4. Completar la view llamada "comic_list_api_view()"
+Deberá compeltar una view basada en una función llamada "comic_list_api_view()", que se encuentra en el archivo "views.py" dentro de e-commerce.
+
+Esta view ya está configurada y el endpoint que se le adjudicó (la URL) es:\
+`http://127.0.0.1:8000/e-commerce/comic-list/`.
+
+Su vista deberá retorna un JSON con todos los comics listados en su base de datos, para ello:
+1 - Deberá utilizar el ORM de Django para obtener todos los datos diponibles del modelo "Comic".
+2 - De la queryset obtenida en el punto anterior deberá utilizar el método "values" para a serializar sus datos y transformarlos en una lista de diccionarios.
+3 - Deberá retornar los datos con un JsonResponse utilizando el parámetro data.
+4 - Una vez completado los puntos anteriors, ingresar al endpoint desde su explorador web a la URL correspondiente y verificar que los datos han sido retornado como era esperado.
 
 ## ¡Hora de evaluar nuestro código!
 Puede evaluar que ha alcanzo los solicitado en el desafio ejecutando los tests que vienen dentro la carpeta ejercicios_practica dónde ha estando incoporando su código. Para eso debe realizar los siguiente:

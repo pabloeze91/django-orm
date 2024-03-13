@@ -2,52 +2,26 @@ import pytest
 from pytest_fixtures import *
 
 from django.urls import reverse
+from django.core.management import call_command
+
 from rest_framework import status
 
 from e_commerce import models
 
 
 @pytest.mark.django_db
-def test_modelo_WishList(create_user, create_comic):
-    assert hasattr(models, 'WishList'), "El modelo WishList no está definido en models"
-    
-    # crear un comic para el ensayo de WishList
-    comic = create_comic()
-    
-    # crear un usuario para el ensayo de WishList
-    user = create_user()
-    
-    # Ensayar si WhishList fue generada correctamente
-    models.WishList.objects.create(
-        user=user,
-        comic=comic,
-        favorite=True,
-        cart=False,
-        wished_qty=2,
-        bought_qty=1
-    )
-    
-@pytest.mark.django_db
-def test_get_comic(client):
-    endpoint = '/get-comic/'
-    response = client.get(endpoint)
+def test_comic_list(client):
 
-    comic_data = {
-		"id": 1,
-		"marvel_comic": "1010",
-		"title": 'Inove',
-		"stock_qty": 6,
-		"description": "Mi primer JSON en Django",
-		"price": 10.0,
-		"picture": "https://www.django-rest-framework.org/img/logo.png"
-	}
+    call_command('get_comics')
 
-    # Verificar que la petición haya retornando 200
-    assert response.status_code == status.HTTP_200_OK, f'Endpoint incorrecto'
+    endpoint_url = reverse('comic_list_api_view')
+    response = client.get(endpoint_url)
+
+    assert response.status_code == status.HTTP_200_OK, 'El endpoint falló al ejecutarse'
 
     data = response.json()
-   
-    # Comparar los valores obtenidos con el patron
-    # uno por uno
-    for k in comic_data:
-        assert data.get(k) == comic_data.get(k), f'El campo {k} no es {comic_data[k]}'
+    print(f"Tipo de dato retornado por la vista: {type(data)}")
+    assert isinstance(data, list), f'Se espera que el endpoint retorne una lista'
+
+    print(f"Cuantos comics retornó el enpdoint en la lista: {len(data)}")
+    assert len(data), 'La lista de comics no debe estar vacía'
