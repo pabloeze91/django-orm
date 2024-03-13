@@ -18,22 +18,25 @@ class Command(BaseCommand):
         if response.status_code == 200:
             self._print_success(f'response: {response}')
             _data = response.json().get('data', {}).get('results', {})
-            for _row in _data[:50]:
+            for i, _row in enumerate(_data[:50]):
                 _price = _row.get('prices', [{}])[0].get('price', 0.00)
                 _description = _row.get('description', '')
                 if not _description:
-                    _description = "sin descripción"
-                if _price > 0.00:
+                    _description = _row.get('title', 'sin descripción')
+                if _price > 0.00 and _description:
                     _instance, _created = Comic.objects.get_or_create(
                         marvel_id=_row.get('id'),
                         defaults={
                             'title': _row.get('title'),
                             'description': _description,
                             'price': _price,
-                            'stock_qty': 5,
+                            'stock_qty': 5 if i % 2 else 3, # stock 5 o 3
                             'picture': f"{_row.get('thumbnail', {}).get('path')}/standard_xlarge.jpg",
                             'marvel_id': _row.get('id')
                         }
+                    )
+                    self._print_debug(
+                        f'instance: {_instance} - created: {_created}'
                     )
         else:
             self._print_error(

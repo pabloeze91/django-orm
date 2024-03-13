@@ -26,3 +26,18 @@ def create_comic():
             picture=''
         )
     return make_comic
+
+@pytest.fixture
+def create_list_of_comic():
+    def make_comics(**kwargs):
+        for i in range(10):
+            Comic.objects.create(
+                marvel_id=(1000+i) if i % 2 else (100+i),
+                title=f'Inove SuperHeroe {i+1}',
+                description='Coding School',
+                price=i,
+                stock_qty=5 if i % 2 else 3,
+                picture=''
+            )
+    return make_comics
+
