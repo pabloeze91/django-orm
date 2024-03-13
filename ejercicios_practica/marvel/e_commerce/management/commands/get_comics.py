@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 _description = _row.get('description', '')
                 if not _description:
                     _description = "sin descripción"
-                if _price > 0.00 and _description:
+                if _price > 0.00:
                     _instance, _created = Comic.objects.get_or_create(
                         marvel_id=_row.get('id'),
                         defaults={
@@ -34,9 +34,6 @@ class Command(BaseCommand):
                             'picture': f"{_row.get('thumbnail', {}).get('path')}/standard_xlarge.jpg",
                             'marvel_id': _row.get('id')
                         }
-                    )
-                    self._print_debug(
-                        f'instance: {_instance} - created: {_created}'
                     )
         else:
             self._print_error(

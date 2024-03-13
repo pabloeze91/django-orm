@@ -46,7 +46,7 @@ Tenemos que ir a la carpeta donde se encuentra el archivo *manage.py*
 
   - Ejemplo: **$** `python manage.py migrate e_commerce`
 
-### 5. Creamos un super usuario:  
+### 5. Creamos un super usuario:
 
 **$** `python manage.py createsuperuser`
 
